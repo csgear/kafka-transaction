@@ -1,16 +1,16 @@
 package com.vkeonline.payment.domain;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
-    private Long id;
-    private String name;
+public class PaymentAggregator {
     private int amountAvailable;
     private int amountReserved;
 
+    public PaymentAggregator(int amountAvailable) {
+        this.amountAvailable = amountAvailable;
+    }
 }

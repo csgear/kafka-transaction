@@ -25,7 +25,7 @@ public class OrderGeneratorService {
 
     @Async
     public void generate() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 100 ; i++) {
             int x = RAND.nextInt(5) + 1;
             Order o = new Order(id.incrementAndGet(),
                     RAND.nextLong(100) + 1,

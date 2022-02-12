@@ -9,6 +9,12 @@ spring.kafka:
   producer:
     key-serializer: org.apache.kafka.common.serialization.LongSerializer
     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  streams:
+    properties:
+      processing.guarantee: exactly_once
+      default.key.serde: org.apache.kafka.common.serialization.Serdes$LongSerde
+      default.value.serde: org.springframework.kafka.support.serializer.JsonSerde
+      spring.json.trusted.packages: "*"
 
 spring.output.ansi.enabled: ALWAYS
 

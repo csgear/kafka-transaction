@@ -1,8 +1,14 @@
 package com.vkeonline.base.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Order {
     private Long id;
     private Long customerId;
@@ -10,6 +16,7 @@ public class Order {
     private int productCount;
     private int price;
     private String status;
+
     private String source;
 
     public Order(Long id, Long customerId, Long productId, int productCount, int price) {

@@ -15,6 +15,7 @@
         <module>base-domain</module>
         <module>stock-service</module>
         <module>payment-service</module>
+        <module>order-service</module>
     </modules>
 
 </project>

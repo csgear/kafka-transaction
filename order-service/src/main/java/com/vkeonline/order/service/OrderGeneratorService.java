@@ -25,13 +25,13 @@ public class OrderGeneratorService {
 
     @Async
     public void generate() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 50; i++) {
             int x = RAND.nextInt(5) + 1;
             Order o = new Order(id.incrementAndGet(),
                     RAND.nextLong(100) + 1,
                     RAND.nextLong(100) + 1, "NEW");
             o.setPrice(100 * x);
-            o.setProductCount(x);
+            o.setProductCount(x * 10);
             template.send("orders", o.getId(), o);
         }
     }

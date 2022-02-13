@@ -13,7 +13,6 @@ import org.apache.kafka.streams.state.Stores;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.EnableKafkaStreams;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.support.serializer.JsonSerde;
@@ -29,6 +28,7 @@ import java.util.concurrent.Executor;
 @AllArgsConstructor
 @EnableAsync
 public class OrderApp {
+    private final String ORDER_TABLE = "order_table" ;
 
     private final OrderManageService orderManageService;
 
@@ -39,7 +39,7 @@ public class OrderApp {
     @Bean
     public NewTopic orders() {
         return TopicBuilder.name("orders")
-                .partitions(3)
+                .partitions(1)
                 .compact()
                 .build();
     }
@@ -47,7 +47,7 @@ public class OrderApp {
     @Bean
     public NewTopic paymentTopic() {
         return TopicBuilder.name("payment-orders")
-                .partitions(3)
+                .partitions(1)
                 .compact()
                 .build();
     }
@@ -55,13 +55,13 @@ public class OrderApp {
     @Bean
     public NewTopic stockTopic() {
         return TopicBuilder.name("stock-orders")
-                .partitions(3)
+                .partitions(1)
                 .compact()
                 .build();
     }
 
     @Bean
-    public KStream<Long, Order> stream(StreamsBuilder builder) {
+    public KStream<Long, Order> orderKStream(StreamsBuilder builder) {
         JsonSerde<Order> orderSerde = new JsonSerde<>(Order.class);
         KStream<Long, Order> stream = builder
                 .stream("payment-orders", Consumed.with(Serdes.Long(), orderSerde));
@@ -78,8 +78,8 @@ public class OrderApp {
         return stream;
     }
 
-    @Bean
-    public KTable<Long, Order> table(StreamsBuilder builder) {
+    @Bean(ORDER_TABLE)
+    public KTable<Long, Order> orderKTable(StreamsBuilder builder) {
         KeyValueBytesStoreSupplier store =
                 Stores.persistentKeyValueStore("orders");
         JsonSerde<Order> orderSerde = new JsonSerde<>(Order.class);

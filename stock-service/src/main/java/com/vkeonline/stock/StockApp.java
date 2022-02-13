@@ -39,8 +39,8 @@ public class StockApp {
     public void generateData() {
         Random r = new Random();
         for (int i = 0; i < 1000; i++) {
-            int count = r.nextInt(1000);
-            Product p = new Product(null, "Product" + i, count, 0);
+            int count = r.nextInt(100);
+            Product p = new Product((long) i, "Product" + i, count, 0);
             repository.save(p);
         }
     }
